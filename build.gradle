@@ -1,0 +1,57 @@
+plugins {
+    // Spring Boot for building modern Java applications
+    id 'org.springframework.boot' version '3.1.2'
+
+    // SpotBugs for static code analysis
+    id 'com.github.spotbugs' version '5.0.13'
+
+    // Gradle dependency updates plugin to manage library versions
+    id 'com.github.ben-manes.versions' version '0.46.0'
+
+    // Kotlin support for building Kotlin-based projects
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+
+    // JUnit 5 Gradle plugin for testing support
+    id 'de.marcphilipp.nexus-publish' version '1.3.1'
+}
+
+repositories {
+    // Maven Central for dependencies
+    mavenCentral()
+
+    // JCenter for additional libraries
+    jcenter()
+}
+
+dependencies {
+    // Spring Boot starter dependencies
+    implementation 'org.springframework.boot:spring-boot-starter:3.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.1.2'
+
+    // Jackson for JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+    // Lombok for boilerplate code reduction
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    // JUnit for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+
+    // AssertJ for fluent assertions in tests
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+
+    // Mockito for mocking in tests
+    testImplementation 'org.mockito:mockito-core:5.4.0'
+}
+
+java {
+    // Set Java compatibility
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile) {
+    // Enable incremental compilation for better performance
+    options.incremental = true
+}
