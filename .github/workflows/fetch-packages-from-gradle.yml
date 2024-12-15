@@ -1,0 +1,47 @@
+name: Extract and Upsert Gradle Plugins and Service to Port
+
+on:
+  workflow_dispatch:
+    inputs:
+      gradle_path:
+        description: "Path to the Gradle file"
+        required: true
+        default: ./build.gradle
+
+jobs:
+  update-port-plugins:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: pip install --upgrade pip
+
+      - name: Extract Plugins and Service
+        id: parse-entities
+        env:
+          GRADLE_PATH: ${{ github.event.inputs.gradle_path }}
+        run: |
+          python ./extract_gradle_plugins.py > entities.json
+          entities_string=$(cat entities.json | jq -c .)
+          echo "entities=$entities_string" >> $GITHUB_ENV
+
+      - name: Debug Extracted Entities
+        run: |
+          echo "Entities JSON: ${{ env.entities }}"
+
+      - name: Bulk Upsert to Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: BULK_UPSERT
+          entities: ${{ env.entities }}
