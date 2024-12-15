@@ -34,7 +34,7 @@ Before running the workflow, ensure that the required **blueprints** are created
 
 The **Service** blueprint represents your service and its relationships to dependencies. Use the following JSON to create the blueprint in Port:
 
-\`\`\`json
+```json
 {
   "identifier": "service",
   "title": "Service",
@@ -101,7 +101,7 @@ The **Service** blueprint represents your service and its relationships to depen
     }
   }
 }
-\`\`\`
+```
 
 ---
 
@@ -109,7 +109,7 @@ The **Service** blueprint represents your service and its relationships to depen
 
 The **Package** blueprint represents each plugin as a dependency. Use the following JSON to create the blueprint in Port:
 
-\`\`\`json
+```json
 {
   "identifier": "package",
   "title": "Package",
@@ -137,7 +137,7 @@ The **Package** blueprint represents each plugin as a dependency. Use the follow
   "aggregationProperties": {},
   "relations": {}
 }
-\`\`\`
+```
 
 ---
 
@@ -163,7 +163,7 @@ The workflow will:
 
 Here’s an example Gradle file to test the workflow:
 
-\`\`\`gradle
+```gradle
 plugins {
     id 'org.springframework.boot' version '3.1.2'
     id 'com.github.spotbugs' version '5.0.13'
@@ -177,7 +177,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
-\`\`\`
+```
 
 ---
 
